@@ -15,11 +15,11 @@ const login = () => {
     setId('')
   }
 
-  if (name) {
+  if (session) {
     return (
       <>
-        Signed in as {name} <br />
-        <button onClick={() => dispatch(setName(""))}>Sign out</button>
+        Signed in as {session.user.name} <br />
+        <button onClick={() => signOut()}>Sign out</button>
       </>
     )
   }
@@ -27,7 +27,7 @@ const login = () => {
     <>
       Not signed in <br />
       <input type={"text"} value={id} onChange={(e => setId(e.target.value))}></input>
-      <button onClick={() => handleSignon(id)}>Sign in</button>
+      <button onClick={() => signIn(null, { callbackUrl: 'http://localhost:3000/' })}>Sign in</button>
     </>
   )
 }
