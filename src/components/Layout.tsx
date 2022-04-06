@@ -8,6 +8,7 @@ import {
   Header,
   Nav,
   Navbar,
+  Popover,
   Whisper,
 } from "rsuite";
 import { Exit } from "@rsuite/icons";
@@ -36,6 +37,18 @@ const NavLink = React.forwardRef(
     );
   }
 );
+
+const ProfileMenu = () => {
+  return (
+    <Popover title="Title">
+      <p>This is a default Popover </p>
+      <p>Content</p>
+      <p>
+        <a>link</a>
+      </p>
+    </Popover>
+  );
+};
 
 const Layout: React.FunctionComponent<LayoutProps> = ({
   activeKey,
@@ -69,10 +82,10 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
             ) : (
               <Nav.Item>
                 <Whisper
-                  placement="top"
+                  placement="bottomStart"
                   trigger="hover"
                   controlId="control-id-hover-enterable"
-                  speaker={speaker}
+                  speaker={ProfileMenu}
                   enterable
                 >
                   <Button>Hover + Enterable</Button>

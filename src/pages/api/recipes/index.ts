@@ -15,12 +15,13 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
   const Recipe = db.models.Recipe;
 
-  const session = await getSession({ req });
+  // const session = await getSession({ req });
 
   switch (method) {
     case "GET":
       try {
-        const recipes = await Recipe.find({});
+        const recipes = await Recipe.find({}).exec();
+
         res.status(200).json({ success: true, data: recipes });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -28,7 +29,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       break;
     case "POST":
       try {
-        if (session) {
+        if (getUserId(req)) {
           const recipe = await Recipe.create({
             ...req.body,
             author: getUserId(req),
