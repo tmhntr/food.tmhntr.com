@@ -2,10 +2,10 @@ import type { Types } from "mongoose";
 import { Schema } from "mongoose";
 
 // Interface representing a document in MongoDB.
-interface Inventory {
-  _id: Types.ObjectId;
-  __v: string;
-  id: string;
+interface Food {
+  name: string;
+  amount: number;
+  units: string;
 }
 
 interface User {
@@ -16,7 +16,7 @@ interface User {
   email: string | null;
   emailVerified: Date | null;
   image: string | null;
-  inventory: Types.ObjectId;
+  inventory: Food[];
 }
 
 interface Account {
@@ -55,49 +55,48 @@ interface VerificationToken {
   identifier: string;
 }
 
-const inventorySchema = new Schema({
-  food: [
-    {
-      name: {
-        type: String,
-        required: [true, "Must provide name."],
-        trim: true,
-        maxlength: [64, "Cannot be longer than 64 chars."],
-      },
-      amount: {
-        type: Number,
-        required: [true, "Must provide amount."],
-      },
-      units: {
-        type: String,
-        required: [true, "Must provide units."],
-        trim: true,
-        enum: [
-          "pc",
-          "cup",
-          "tbsp",
-          "tsp",
-          "g",
-          "kg",
-          "oz",
-          "l",
-          "ml",
-          "fl-oz",
-          "gal",
-          "lb",
-        ],
-      },
-    },
-  ],
-});
-
 // Schema corresponding to the document interface.
 const userSchema = new Schema<User>({
   name: { type: String },
   email: { type: String, unique: true },
   emailVerified: { type: Date },
   image: { type: String },
-  inventory: { type: Schema.Types.ObjectId, ref: "User" },
+  inventory: {
+    type: [
+      {
+        name: {
+          type: String,
+          required: [true, "Must provide name."],
+          trim: true,
+          maxlength: [64, "Cannot be longer than 64 chars."],
+        },
+        amount: {
+          type: Number,
+          required: [true, "Must provide amount."],
+        },
+        units: {
+          type: String,
+          required: [true, "Must provide units."],
+          trim: true,
+          enum: [
+            "pc",
+            "cup",
+            "tbsp",
+            "tsp",
+            "g",
+            "kg",
+            "oz",
+            "l",
+            "ml",
+            "fl-oz",
+            "gal",
+            "lb",
+          ],
+        },
+      },
+    ],
+    default: [],
+  },
 });
 
 const accountSchema = new Schema<Account>({

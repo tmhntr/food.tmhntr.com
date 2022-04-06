@@ -6,6 +6,7 @@ import {
   accountSchema,
   sessionSchema,
   verificationTokenSchema,
+  inventorySchema,
 } from "./models";
 import type {
   Adapter,
@@ -53,6 +54,15 @@ export function MongooseAdapter(conn: Connection): Adapter {
     verificationTokenSchema
   );
 
+  //   const UserModel = conn.models.User || conn.model("User", userSchema);
+  //   const AccountModel =
+  //     conn.models.Account || conn.model("Account", accountSchema);
+  //   const SessionModel =
+  //     conn.models.Session || conn.model("Session", sessionSchema);
+  //   const VerificationTokenModel =
+  //     conn.models.VerificationToken ||
+  //     conn.model("VerificationToken", verificationTokenSchema);
+
   return {
     async createUser(data) {
       const user = await UserModel.create(data);
@@ -84,7 +94,7 @@ export function MongooseAdapter(conn: Connection): Adapter {
         data.id,
         { name: data.name },
         { new: true }
-      ).exec();
+      );
       return from<AdapterUser>(user);
     },
     async deleteUser(id) {
@@ -96,6 +106,7 @@ export function MongooseAdapter(conn: Connection): Adapter {
     },
     async linkAccount(data) {
       const account = await AccountModel.create(data);
+
       return from<Account>(account);
     },
     async unlinkAccount(data) {
