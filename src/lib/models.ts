@@ -19,6 +19,26 @@ interface User {
   inventory: Food[];
 }
 
+interface Rating {
+  userId: Types.ObjectId;
+  value: number;
+}
+
+interface Recipe {
+  _id: Types.ObjectId;
+  __v: string;
+  id: string;
+  cookTime: number;
+  servings: number;
+  name: string;
+  ratings: Rating[];
+  description: string;
+  ingredients: Food[];
+  directions: string[];
+  notes: string;
+  author: Types.ObjectId;
+}
+
 interface Account {
   _id: Types.ObjectId;
   __v: string;
@@ -55,6 +75,38 @@ interface VerificationToken {
   identifier: string;
 }
 
+const foodSchema = new Schema<Food>({
+  name: {
+    type: String,
+    required: [true, "Must provide name."],
+    trim: true,
+    maxlength: [64, "Cannot be longer than 64 chars."],
+  },
+  amount: {
+    type: Number,
+    required: [true, "Must provide amount."],
+  },
+  units: {
+    type: String,
+    required: [true, "Must provide units."],
+    trim: true,
+    enum: [
+      "pc",
+      "cup",
+      "tbsp",
+      "tsp",
+      "g",
+      "kg",
+      "oz",
+      "l",
+      "ml",
+      "fl-oz",
+      "gal",
+      "lb",
+    ],
+  },
+});
+
 // Schema corresponding to the document interface.
 const userSchema = new Schema<User>({
   name: { type: String },
@@ -62,41 +114,26 @@ const userSchema = new Schema<User>({
   emailVerified: { type: Date },
   image: { type: String },
   inventory: {
+    type: [foodSchema],
+    default: [],
+  },
+});
+
+const recipeSchema = new Schema<Recipe>({
+  cookTime: Number,
+  servings: Number,
+  name: String,
+  ratings: {
     type: [
-      {
-        name: {
-          type: String,
-          required: [true, "Must provide name."],
-          trim: true,
-          maxlength: [64, "Cannot be longer than 64 chars."],
-        },
-        amount: {
-          type: Number,
-          required: [true, "Must provide amount."],
-        },
-        units: {
-          type: String,
-          required: [true, "Must provide units."],
-          trim: true,
-          enum: [
-            "pc",
-            "cup",
-            "tbsp",
-            "tsp",
-            "g",
-            "kg",
-            "oz",
-            "l",
-            "ml",
-            "fl-oz",
-            "gal",
-            "lb",
-          ],
-        },
-      },
+      { userId: { type: Schema.Types.ObjectId, ref: "User" }, value: Number },
     ],
     default: [],
   },
+  description: String,
+  ingredients: [foodSchema],
+  directions: { type: [String] },
+  notes: { type: String, default: "" },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const accountSchema = new Schema<Account>({
@@ -128,4 +165,10 @@ const verificationTokenSchema = new Schema<VerificationToken>({
 });
 
 // Export schemas.
-export { userSchema, accountSchema, sessionSchema, verificationTokenSchema };
+export {
+  userSchema,
+  accountSchema,
+  sessionSchema,
+  verificationTokenSchema,
+  recipeSchema,
+};

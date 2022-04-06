@@ -1,37 +1,57 @@
-import React from 'react'
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { getNameAsync, selectUserName, setName } from '../features/user/userSlice'
+import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  getNameAsync,
+  selectUserName,
+  setName,
+} from "../features/user/userSlice";
+import Layout from "../components/Layout";
+import { Button, ButtonToolbar, Form, Panel } from "rsuite";
 
 const login = () => {
-  const { data: session } = useSession()
-  const [id, setId] = React.useState('')
-
-  const dispatch = useAppDispatch()
-  const name = useAppSelector(selectUserName)
-
-  const handleSignon = id => {
-    dispatch(getNameAsync(id))
-    setId('')
-  }
+  const { data: session } = useSession();
+  const [id, setId] = React.useState("");
 
   if (session) {
-    console.log(session);
-    
     return (
-      <>
-        Signed in as {session.user.name} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
+      <Layout>
+        <p>Signed in as {session.user.name}</p> <br />
+        <Button onClick={() => signOut()} appearance="primary">
+          Sign out
+        </Button>
+      </Layout>
+    );
   }
   return (
     <>
-      Not signed in <br />
-      <input type={"text"} value={id} onChange={(e => setId(e.target.value))}></input>
-      <button onClick={() => signIn(null, { callbackUrl: 'http://localhost:3000/' })}>Sign in</button>
+      <Panel header={<h3>Login</h3>} bordered>
+        <Form fluid>
+          {/* <Form.Group>
+                  <Form.ControlLabel>Username or email address</Form.ControlLabel>
+                  <Form.Control name="name" />
+                </Form.Group>
+                <Form.Group>
+                  <Form.ControlLabel>Password</Form.ControlLabel>
+                  <Form.Control name="password" type="password" autoComplete="off" />
+                </Form.Group> */}
+          <Form.Group>
+            <ButtonToolbar>
+              <Button
+                appearance="primary"
+                onClick={() =>
+                  signIn(null, { callbackUrl: "http://localhost:3000/" })
+                }
+              >
+                Sign in
+              </Button>
+              {/* <Button appearance="link">Forgot password?</Button> */}
+            </ButtonToolbar>
+          </Form.Group>
+        </Form>
+      </Panel>
     </>
-  )
-}
+  );
+};
 
-export default login
+export default login;

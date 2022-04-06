@@ -6,7 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 // import Auth0Provider from "next-auth/providers/auth0";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 // import clientPromise from "../../../lib/mongodb";
-import dbConnect from "../../../lib/mongoose-adapter/dbConnect";
+import dbConnect from "../../../lib/dbConnect";
 import { MongooseAdapter } from "../../../lib/mongoose-adapter";
 
 // import AppleProvider from "next-auth/providers/apple"

@@ -1,10 +1,13 @@
-import { signOut } from 'next-auth/react'
-import React from 'react'
+import { signOut } from "next-auth/react";
+import React, { FC } from "react";
+import { Button } from "rsuite";
 
-const LogoutButton = () => {
+const LogoutButton: FC = () => {
   return (
-    <button onClick={() => signOut({ callbackUrl: 'http://localhost:3000/' })}>Sign out</button>
-  )
-}
+    <Button onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}>
+      Sign out
+    </Button>
+  );
+};
 
-export default LogoutButton
+export default LogoutButton;

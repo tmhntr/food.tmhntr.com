@@ -1,13 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../lib/mongoose-adapter/dbConnect";
+import dbConnect from "../../../lib/dbConnect";
+import type { Connection } from "mongoose";
 
-import { userSchema } from "../../lib/mongoose-adapter/models";
+import { userSchema } from "../../../lib/models";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
 
-  const db = dbConnect();
-
+  const db: Connection = dbConnect();
+  if (!db.models.User) {
+    db.model("User", userSchema);
+  }
   const User = db.models.User;
 
   switch (method) {
