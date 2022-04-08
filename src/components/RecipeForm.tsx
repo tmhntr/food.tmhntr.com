@@ -20,93 +20,7 @@ import PlusIcon from "@rsuite/icons/Plus";
 import { Food, foodUnitList, Recipe } from "../lib/models";
 import { useDispatch } from "react-redux";
 import { postRecipeAsync } from "../features/user/recipeSlice";
-
-const FoodList: FC<{
-  foodlist: Food[];
-  updateFoodList: (foodlist: Food[]) => void;
-}> = ({ foodlist, updateFoodList }) => {
-  //   const { foodlist } = props;
-  let initialState: Food = { name: "", amount: null, units: null };
-  const [foodToAdd, setFoodToAdd] = React.useState(initialState);
-
-  const handleAddFood = () => {
-    updateFoodList([...foodlist, foodToAdd]);
-    setFoodToAdd(initialState);
-  };
-
-  const handleEditFood = (index: number): void => {
-    setFoodToAdd(foodlist[index]);
-
-    updateFoodList(foodlist.filter((value, i) => i !== index));
-  };
-  const handleDeleteFood = (index: number): void => {
-    updateFoodList(foodlist.filter((value, i) => i !== index));
-  };
-  return (
-    <>
-      <Panel header="Ingredient list" bordered bodyFill>
-        <List hover>
-          {foodlist.map((item, index) => (
-            <List.Item key={item["name"] + index} index={index + 1}>
-              <FlexboxGrid justify="space-between">
-                {/*name*/}
-                <FlexboxGrid.Item colspan={10}>
-                  <p style={{ marginLeft: 10 }}>{item["name"]}</p>
-                </FlexboxGrid.Item>
-                {/* amount */}
-                <FlexboxGrid.Item colspan={4}>
-                  <p>
-                    {item["amount"]}
-                    {item["units"]}
-                  </p>
-                </FlexboxGrid.Item>
-
-                {/*edit button*/}
-                <FlexboxGrid.Item colspan={6}>
-                  <a onClick={() => handleEditFood(index)}>Edit</a>
-                  <span style={{ padding: 5 }}>|</span>
-                  <a onClick={() => handleDeleteFood(index)}>Delete</a>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </List.Item>
-          ))}
-        </List>
-      </Panel>
-      <Stack spacing={6} alignItems={"flex-end"}>
-        <div>
-          <label>Name</label>
-          <Input
-            value={foodToAdd.name}
-            onChange={(value) => {
-              setFoodToAdd({ ...foodToAdd, name: value });
-            }}
-          />
-        </div>
-        <div>
-          <label>Amount</label>
-          <InputNumber
-            value={foodToAdd.amount}
-            onChange={(value) => {
-              value = parseInt(value.toString());
-              setFoodToAdd({ ...foodToAdd, amount: value });
-            }}
-          />
-        </div>
-        <div>
-          <label>Units</label>
-          <InputPicker
-            value={foodToAdd.units}
-            data={foodUnitList.map((item) => ({ label: item, value: item }))}
-            onChange={(value) => {
-              setFoodToAdd({ ...foodToAdd, units: value });
-            }}
-          />
-        </div>
-        <Button onClick={handleAddFood}>Add</Button>
-      </Stack>
-    </>
-  );
-};
+import FoodList from "./FoodList";
 
 const DirectionList: FC<{
   directionlist: string[];
@@ -131,7 +45,7 @@ const DirectionList: FC<{
   };
   return (
     <>
-      <Panel header="Ingredient list" bordered bodyFill>
+      <Panel header="Directions" bordered bodyFill>
         <List hover>
           {directionlist.map((item, index) => (
             <List.Item key={item["name"] + index} index={index + 1}>
@@ -173,9 +87,10 @@ const DirectionList: FC<{
   );
 };
 
-const RecipeForm = () => {
+const RecipeForm: FC<{ style?: any }> = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  const dispatch = useDispatch();
 
   let initialState: Recipe = {
     name: "",
@@ -197,8 +112,6 @@ const RecipeForm = () => {
     handleCancel();
   };
 
-  const dispatch = useDispatch();
-
   return (
     <>
       <IconButton
@@ -207,6 +120,7 @@ const RecipeForm = () => {
         appearance="primary"
         circle
         onClick={handleOpen}
+        {...props}
       />
       <Modal
         backdrop={"static"}

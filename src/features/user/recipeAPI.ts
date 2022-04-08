@@ -5,7 +5,7 @@ export const getPublicRecipes = async (): Promise<{ data: Recipe[] }> => {
     method: "GET",
   });
   const result = await response.json();
-  console.log(result);
+  // console.log(result);
 
   return result;
 };
@@ -19,7 +19,7 @@ export const postRecipe = async (recipe): Promise<{ data: Recipe }> => {
     body: JSON.stringify(recipe),
   });
   const result = await response.json();
-  console.log(result);
+  // console.log(result);
 
   return result;
 };

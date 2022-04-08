@@ -12,31 +12,38 @@ import {
 import { Recipe } from "../lib/models";
 import RecipeCard from "../components/RecipeCard";
 
+const styles = {
+  button: {
+    // justifyContent: "center",
+    // alignItems: "center",
+    position: "fixed",
+    bottom: 80,
+    right: 80,
+    width: 60,
+    height: 60,
+    // backgroundColor: "#26653A",
+  },
+};
+
 const Index = () => {
   const dispatch = useDispatch();
   const { data: session, status } = useSession();
-
+  let recipes: Recipe[] = useSelector(selectRecipes);
   useEffect(() => {
-    status === "authenticated" && dispatch(getPublicRecipesAsync());
-  }, [status]);
-  const recipes: Recipe[] = useSelector(selectRecipes);
+    dispatch(getPublicRecipesAsync());
+  }, []);
   return (
     <>
-      <Header>
-        <title>HOME</title>
-      </Header>
-      <Layout activeKey="home">
-        <Grid fluid>
-          <Row>
-            {recipes.map((recipe, index) => (
-              <Col xs={24} md={12} key={recipe.id ? recipe.id : index}>
-                <RecipeCard recipe={recipe} style={{ margin: 48 }} />
-              </Col>
-            ))}
-          </Row>
-        </Grid>
-        <RecipeForm />
-      </Layout>
+      <Grid fluid>
+        <Row>
+          {recipes.map((recipe, index) => (
+            <Col xs={24} md={12} key={recipe.id ? recipe.id : index}>
+              <RecipeCard recipe={recipe} style={{ margin: 48 }} />
+            </Col>
+          ))}
+        </Row>
+      </Grid>
+      {session && <RecipeForm style={styles.button} />}
     </>
   );
 };

@@ -16,20 +16,24 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   switch (method) {
     case "GET":
       try {
-        const users = await User.find({});
-        res.status(200).json({ success: true, data: users });
+        const user = await User.findOne(req.query);
+        // console.log(user);
+
+        user
+          ? res.status(200).json({ success: true, data: user })
+          : res.status(404).json({ success: false });
       } catch (error) {
         res.status(400).json({ success: false });
       }
       break;
-    case "POST":
-      try {
-        const user = await User.create(req.body);
-        res.status(201).json({ success: true, data: user });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
+    // case "POST":
+    //   try {
+    //     const user = await User.create(req.body);
+    //     res.status(201).json({ success: true, data: user });
+    //   } catch (error) {
+    //     res.status(400).json({ success: false });
+    //   }
+    //   break;
     default:
       res.status(400).json({ success: false });
       break;
