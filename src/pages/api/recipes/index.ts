@@ -4,7 +4,7 @@ import type { Connection } from "mongoose";
 
 import { recipeSchema } from "../../../lib/models";
 import { getSession } from "next-auth/react";
-import getUserId from "../../../lib/getUserId";
+import getUser from "../../../lib/getUser";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
@@ -20,19 +20,22 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   switch (method) {
     case "GET":
       try {
-        const recipes = await Recipe.find({}).exec();
+        const recipes = await Recipe.find({});
 
         res.status(200).json({ success: true, data: recipes });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.log(error);
+
+        res.status(400).json({ success: false, message: error });
       }
       break;
     case "POST":
       try {
-        if (getUserId(req)) {
+        const { _id } = await getUser(req);
+        if (_id) {
           const recipe = await Recipe.create({
             ...req.body,
-            author: getUserId(req),
+            author: _id,
           });
           res.status(201).json({ success: true, data: recipe });
         } else {

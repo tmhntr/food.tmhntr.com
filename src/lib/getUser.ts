@@ -4,7 +4,7 @@ import type { Connection } from "mongoose";
 import dbConnect from "./dbConnect";
 import { userSchema } from "./models";
 
-const getUserId = async (req: NextApiRequest) => {
+const getUser = async (req: NextApiRequest) => {
   const session = await getSession({ req });
 
   if (session) {
@@ -14,12 +14,13 @@ const getUserId = async (req: NextApiRequest) => {
     }
     const User = db.models.User;
 
-    const user = await User.findOne({ ...session.user });
+    const user = await User.findOne({ email: session.user.email });
+    console.log(user);
 
-    return user._id;
+    return user;
   }
 
   return null;
 };
 
-export default getUserId;
+export default getUser;

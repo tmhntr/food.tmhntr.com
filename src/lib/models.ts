@@ -2,10 +2,39 @@ import type { Types } from "mongoose";
 import { Schema } from "mongoose";
 
 // Interface representing a document in MongoDB.
-interface Food {
+export type FoodUnits =
+  | "pc"
+  | "cup"
+  | "tbsp"
+  | "tsp"
+  | "g"
+  | "kg"
+  | "oz"
+  | "l"
+  | "ml"
+  | "fl-oz"
+  | "gal"
+  | "lb";
+
+export const foodUnitList: FoodUnits[] = [
+  "pc",
+  "cup",
+  "tbsp",
+  "tsp",
+  "g",
+  "kg",
+  "oz",
+  "l",
+  "ml",
+  "fl-oz",
+  "gal",
+  "lb",
+];
+
+export interface Food {
   name: string;
   amount: number;
-  units: string;
+  units: FoodUnits;
 }
 
 interface User {
@@ -24,19 +53,19 @@ interface Rating {
   value: number;
 }
 
-interface Recipe {
-  _id: Types.ObjectId;
-  __v: string;
-  id: string;
+export interface Recipe {
+  _id?: Types.ObjectId;
+  __v?: string;
+  id?: string;
   cookTime: number;
   servings: number;
   name: string;
-  ratings: Rating[];
+  ratings?: Rating[];
   description: string;
   ingredients: Food[];
   directions: string[];
-  notes: string;
-  author: Types.ObjectId;
+  notes?: string;
+  author?: Types.ObjectId;
 }
 
 interface Account {
