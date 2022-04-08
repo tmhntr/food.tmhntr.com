@@ -1,5 +1,6 @@
-import type { Types } from "mongoose";
+import type { Types, Model } from "mongoose";
 import { Schema } from "mongoose";
+import dbConnect from "./dbConnect";
 
 // Interface representing a document in MongoDB.
 export type FoodUnits =
@@ -192,6 +193,46 @@ const verificationTokenSchema = new Schema<VerificationToken>({
   expires: { type: Date },
   identifier: { type: String },
 });
+
+let userModel: Model<User, any, any, any>;
+let accountModel: Model<Account, any, any, any>;
+let sessionModel: Model<Session, any, any, any>;
+let verificationTokenModel: Model<VerificationToken, any, any, any>;
+let recipeModel: Model<Recipe, any, any, any>;
+
+export const getUserModel = (): Model<User, any, any, any> => {
+  if (userModel) return userModel;
+  const db = dbConnect();
+  userModel = db.model("User", userSchema);
+  return userModel;
+};
+export const getAccountModel = (): Model<Account, any, any, any> => {
+  if (accountModel) return accountModel;
+  const db = dbConnect();
+  accountModel = db.model("Acount", accountSchema);
+  return accountModel;
+};
+export const getSessionModel = (): Model<Session, any, any, any> => {
+  if (sessionModel) return sessionModel;
+  const db = dbConnect();
+  sessionModel = db.model("Session", sessionSchema);
+  return sessionModel;
+};
+export const getVerificationTokenModel = (): Model<VerificationToken> => {
+  if (verificationTokenModel) return verificationTokenModel;
+  const db = dbConnect();
+  verificationTokenModel = db.model(
+    "VerificationToken",
+    verificationTokenSchema
+  );
+  return verificationTokenModel;
+};
+export const getRecipeModel = (): Model<Recipe> => {
+  if (recipeModel) return recipeModel;
+  const db = dbConnect();
+  recipeModel = db.model("Recipes", recipeSchema);
+  return recipeModel;
+};
 
 // Export schemas.
 export {

@@ -2,18 +2,18 @@ import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/dbConnect";
 import type { Connection } from "mongoose";
 
-import { recipeSchema } from "../../../lib/models";
+import { getRecipeModel, recipeSchema } from "../../../lib/models";
 import { getSession } from "next-auth/react";
 import getUser from "../../../lib/getUser";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
 
-  const db: Connection = dbConnect();
-  if (!db.models.User) {
-    db.model("Recipe", recipeSchema);
-  }
-  const Recipe = db.models.Recipe;
+  // const db: Connection = dbConnect();
+  // if (!db.models.User) {
+  //   db.model("Recipe", recipeSchema);
+  // }
+  const Recipe = getRecipeModel();
 
   // const session = await getSession({ req });
 
