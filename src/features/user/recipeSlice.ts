@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppState, AppThunk } from "../../app/store";
 import type { Recipe } from "../../lib/models";
 import { getPublicRecipes, postRecipe } from "./recipeAPI";
-import { fetchUser } from "./userAPI";
 
 export interface RecipeState {
   myRecipes: Recipe[];

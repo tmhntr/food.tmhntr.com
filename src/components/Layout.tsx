@@ -33,21 +33,21 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-// interface NavLinkProps {
-//   as: string;
-//   href: string;
-// }
+interface NavLinkProps {
+  as: string;
+  href: string;
+}
 
-// const NavLink = React.forwardRef(
-//   (props: NavLinkProps, ref: React.Ref<HTMLAnchorElement>) => {
-//     const { as, href, ...rest } = props;
-//     return (
-//       <Link href={href} as={as}>
-//         <a ref={ref} {...rest} />
-//       </Link>
-//     );
-//   }
-// );
+const NavLink = React.forwardRef(
+  (props: NavLinkProps, ref: React.Ref<HTMLAnchorElement>) => {
+    const { as, href, ...rest } = props;
+    return (
+      <Link href={href} as={as}>
+        <a ref={ref} {...rest} />
+      </Link>
+    );
+  }
+);
 
 const UserButton: FC<{ session: Session }> = ({ session }) => {
   const router = useRouter();
@@ -101,9 +101,11 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     <Container>
       <Header>
         <Navbar>
-          <Navbar.Brand href="/" style={style.nav}>
-            Food Manager
-          </Navbar.Brand>
+          <Nav style={style.nav}>
+            <Nav.Item as={NavLink} href="/">
+              Food Manager
+            </Nav.Item>
+          </Nav>
           <Nav style={style.nav} pullRight activeKey={activeKey}>
             {session ? (
               <Nav.Item>
