@@ -1,11 +1,6 @@
 import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import {
-  getNameAsync,
-  selectUserName,
-  setName,
-} from "../features/user/userSlice";
+
 import Layout from "../components/Layout";
 import { Button, ButtonToolbar, Form, Panel } from "rsuite";
 
