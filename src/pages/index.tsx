@@ -28,11 +28,10 @@ const styles = {
 const Index = () => {
   const dispatch = useDispatch();
   const { data: session, status } = useSession();
-
+  let recipes: Recipe[] = useSelector(selectRecipes);
   useEffect(() => {
-    status === "authenticated" && dispatch(getPublicRecipesAsync());
-  }, [status]);
-  const recipes: Recipe[] = useSelector(selectRecipes);
+    dispatch(getPublicRecipesAsync());
+  }, []);
   return (
     <>
       <Grid fluid>
