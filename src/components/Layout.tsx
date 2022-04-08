@@ -60,7 +60,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     <Container>
       <Header>
         <Navbar>
-          <Navbar.Brand href="/">Food Manager</Navbar.Brand>
+          <Nav>Food Manager</Nav>
           <Nav activeKey={activeKey}>
             <Nav.Item eventKey="home" as={NavLink} href="/">
               Home

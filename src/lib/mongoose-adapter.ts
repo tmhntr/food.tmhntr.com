@@ -6,7 +6,6 @@ import {
   accountSchema,
   sessionSchema,
   verificationTokenSchema,
-  inventorySchema,
 } from "./models";
 import type {
   Adapter,
