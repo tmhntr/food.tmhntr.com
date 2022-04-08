@@ -13,9 +13,18 @@ import {
 } from "rsuite";
 import { Exit } from "@rsuite/icons";
 
-import "./layout.less";
 import LogoutButton from "./LogoutButton";
 import { signOut, useSession } from "next-auth/react";
+
+const style = {
+  nav: {
+    width: 300,
+    margin: "0 auto",
+  },
+  container: {
+    padding: 20,
+  },
+};
 
 interface LayoutProps {
   activeKey?: string;
@@ -57,11 +66,11 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
   const { data: session } = useSession();
 
   return (
-    <Container>
+    <Container style={style.container}>
       <Header>
         <Navbar>
-          <Nav>Food Manager</Nav>
-          <Nav activeKey={activeKey}>
+          <Nav style={style.nav}>Food Manager</Nav>
+          <Nav style={style.nav} activeKey={activeKey}>
             <Nav.Item eventKey="home" as={NavLink} href="/">
               Home
             </Nav.Item>
@@ -69,7 +78,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
               Profile
             </Nav.Item>
           </Nav>
-          <Nav pullRight activeKey={activeKey}>
+          <Nav style={style.nav} pullRight activeKey={activeKey}>
             {session ? (
               <Nav.Item
                 icon={<Exit />}
