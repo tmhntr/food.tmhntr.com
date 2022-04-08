@@ -1,21 +1,17 @@
 import { NextApiRequest } from "next";
 import { getSession } from "next-auth/react";
-import type { Connection } from "mongoose";
+import type { Connection, Query } from "mongoose";
 import dbConnect from "./dbConnect";
-import { userSchema } from "./models";
+import { getUserModel, User as UserType, userSchema } from "./models";
 
-const getUser = async (req: NextApiRequest) => {
+const getUser = async (req: NextApiRequest): Promise<UserType | null> => {
   const session = await getSession({ req });
 
   if (session) {
-    const db: Connection = dbConnect();
-    if (!db.models.User) {
-      db.model("User", userSchema);
-    }
-    const User = db.models.User;
+    const User = getUserModel();
 
     const user = await User.findOne({ email: session.user.email });
-    console.log(user);
+    // console.log(user);
 
     return user;
   }

@@ -2,10 +2,11 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import userReducer from "../features/user/userSlice";
 import recipeReducer from "../features/user/recipeSlice";
+import foodReducer from "../features/user/foodSlice";
 
 export function makeStore() {
   return configureStore({
-    reducer: { user: userReducer, recipes: recipeReducer },
+    reducer: { user: userReducer, recipes: recipeReducer, food: foodReducer },
   });
 }
 

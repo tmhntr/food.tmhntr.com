@@ -38,10 +38,10 @@ export interface Food {
   units: FoodUnits;
 }
 
-interface User {
-  _id: Types.ObjectId;
+export interface User {
+  _id: Types.ObjectId | string;
   __v: string;
-  id: string;
+  id?: string;
   name: string | null;
   email: string | null;
   emailVerified: Date | null;
