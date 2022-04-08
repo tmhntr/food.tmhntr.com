@@ -243,6 +243,7 @@ const RecipeForm = () => {
               <label>Servings</label>
               <InputNumber
                 onChange={(value) => {
+                  value = parseInt(value.toString());
                   setRecipe({ ...recipe, servings: value });
                 }}
               />
@@ -251,6 +252,7 @@ const RecipeForm = () => {
               <label>Cook time</label>
               <InputNumber
                 onChange={(value) => {
+                  value = parseInt(value.toString());
                   setRecipe({ ...recipe, cookTime: value });
                 }}
               />
