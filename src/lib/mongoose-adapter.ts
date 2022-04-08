@@ -6,6 +6,10 @@ import {
   accountSchema,
   sessionSchema,
   verificationTokenSchema,
+  getUserModel,
+  getAccountModel,
+  getSessionModel,
+  getVerificationTokenModel,
 } from "./models";
 import type {
   Adapter,
@@ -40,18 +44,23 @@ export function _id(hex?: string) {
   return new ObjectId(hex);
 }
 
-export function MongooseAdapter(conn: Connection): Adapter {
+export function MongooseAdapter(): Adapter {
   const { from } = format;
 
   // const conn = dbConnect(uri);
 
-  const UserModel = conn.model("User", userSchema);
-  const AccountModel = conn.model("Account", accountSchema);
-  const SessionModel = conn.model("Session", sessionSchema);
-  const VerificationTokenModel = conn.model(
-    "VerificationToken",
-    verificationTokenSchema
-  );
+  // const UserModel = conn.model("User", userSchema);
+  // const AccountModel = conn.model("Account", accountSchema);
+  // const SessionModel = conn.model("Session", sessionSchema);
+  // const VerificationTokenModel = conn.model(
+  //   "VerificationToken",
+  //   verificationTokenSchema
+  // );
+
+  const UserModel = getUserModel();
+  const AccountModel = getAccountModel();
+  const SessionModel = getSessionModel();
+  const VerificationTokenModel = getVerificationTokenModel();
 
   //   const UserModel = conn.models.User || conn.model("User", userSchema);
   //   const AccountModel =

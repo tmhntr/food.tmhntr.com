@@ -6,7 +6,6 @@ import GoogleProvider from "next-auth/providers/google";
 // import Auth0Provider from "next-auth/providers/auth0";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 // import clientPromise from "../../../lib/mongodb";
-import dbConnect from "../../../lib/dbConnect";
 import { MongooseAdapter } from "../../../lib/mongoose-adapter";
 
 // import AppleProvider from "next-auth/providers/apple"
@@ -16,7 +15,7 @@ import { MongooseAdapter } from "../../../lib/mongoose-adapter";
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers/oauth
-  adapter: MongooseAdapter(dbConnect()),
+  adapter: MongooseAdapter(),
   providers: [
     /* EmailProvider({
          server: process.env.EMAIL_SERVER,
