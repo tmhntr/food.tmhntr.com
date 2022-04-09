@@ -9,12 +9,6 @@ module.exports = {
         {
           loader: "css-loader",
         },
-        {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-          },
-        },
       ],
     });
 
