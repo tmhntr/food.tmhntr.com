@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import nextConnect from "next-connect";
 import multer from "multer";
-import { getRecipeModel, recipeSchema } from "../../../lib/models";
-import getUser from "../../../lib/getUser";
+import { getRecipeModel } from "../../../lib/models";
 
 const Recipe = getRecipeModel();
 

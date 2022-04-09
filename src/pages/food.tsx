@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FoodList from "../components/FoodList";
-import Layout from "../components/Layout";
 import {
   getFoodAsync,
   selectFood,
