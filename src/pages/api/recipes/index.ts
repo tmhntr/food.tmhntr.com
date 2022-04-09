@@ -1,52 +1,66 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../../lib/dbConnect";
-import type { Connection } from "mongoose";
-
-import { getRecipeModel, recipeSchema } from "../../../lib/models";
 import { getSession } from "next-auth/react";
+import nextConnect from "next-connect";
+import multer from "multer";
+import { getRecipeModel, recipeSchema } from "../../../lib/models";
 import getUser from "../../../lib/getUser";
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
+const Recipe = getRecipeModel();
 
-  // const db: Connection = dbConnect();
-  // if (!db.models.User) {
-  //   db.model("Recipe", recipeSchema);
-  // }
-  const Recipe = getRecipeModel();
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "./public/uploads",
+    filename: (req, file, cb) => cb(null, file.originalname),
+  }),
+});
 
-  // const session = await getSession({ req });
+const apiRoute = nextConnect({
+  // Handle any other HTTP method
+  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});
 
-  switch (method) {
-    case "GET":
-      try {
-        const recipes = await Recipe.find({});
+// Returns middleware that processes multiple files sharing the same field name.
+const uploadMiddleware = upload.single("imageFile");
 
-        res.status(200).json({ success: true, data: recipes });
-      } catch (error) {
-        console.log(error);
+// Adds the middleware to Next-Connect
+apiRoute.use(uploadMiddleware);
 
-        res.status(400).json({ success: false, message: error });
-      }
-      break;
-    case "POST":
-      try {
-        const { _id } = await getUser(req);
-        if (_id) {
-          const recipe = await Recipe.create({
-            ...req.body,
-            author: _id,
-          });
-          res.status(201).json({ success: true, data: recipe });
-        } else {
-          res.status(401).json({ success: false });
-        }
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-    default:
-      res.status(400).json({ success: false });
-      break;
+// Process a GET request
+apiRoute.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.status(200).json({ success: true, data: recipes });
+  } catch (error) {
+    console.log(error);
+
+    res.status(400).json({ success: false, message: error });
   }
-}
+});
+// Process a POST request
+apiRoute.post(async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    // const { _id } = await getUser(req);
+    const _id = "624fb17449de36b8ce2c6bf4";
+    if (_id) {
+      const recipe = await Recipe.create({
+        ...req.body,
+        author: _id,
+      });
+      res.status(201).json({ success: true, data: recipe });
+    } else {
+      res.status(401).json({ success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
+});
+
+export default apiRoute;
+
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, consume as stream
+  },
+};
