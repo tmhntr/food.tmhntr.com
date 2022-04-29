@@ -10,7 +10,7 @@ import Auth0Provider from "next-auth/providers/auth0";
 import { MongooseAdapter } from "../../../lib/mongoose-adapter";
 
 import AppleProvider from "next-auth/providers/apple";
-import EmailProvider from "next-auth/providers/email";
+// import EmailProvider from "next-auth/providers/email";
 
 let providers: Provider[] = [];
 
@@ -22,14 +22,14 @@ if (process.env.GOOGLE_ID && process.env.GOOGLE_SECRET) {
     })
   );
 }
-if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
-  providers.push(
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-    })
-  );
-}
+// if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
+//   providers.push(
+//     EmailProvider({
+//       server: process.env.EMAIL_SERVER,
+//       from: process.env.EMAIL_FROM,
+//     })
+//   );
+// }
 // if (process.env.APPLE_ID) {
 //   providers.push(
 //     AppleProvider({
