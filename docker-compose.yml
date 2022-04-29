@@ -1,0 +1,46 @@
+version: "3.9"
+services: 
+  mongodb: 
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - food-db:/data/db
+    networks:
+      - food-db
+
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - mongodb
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
+    networks: 
+      - food-db
+
+  app:
+    build: .
+    depends_on:
+      - mongodb
+    env_file:
+      - .env.local
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/food-manager?retryWrites=true&w=majority
+    command: sh -c "yarn install && yarn build && yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    
+    
+networks:
+  food-db: {}
+volumes: 
+  food-db:
