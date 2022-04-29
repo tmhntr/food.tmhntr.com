@@ -1,6 +1,9 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  experimental: {
+    outputStandalone: true,
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.(le|c)ss$/,
