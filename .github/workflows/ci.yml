@@ -4,9 +4,15 @@ on:
   pull_request:
     tags:
       - "v*.*.*"
+<<<<<<< HEAD
     branches: [main]
   push:
     branches: [main]
+=======
+    branch: [main]
+  push:
+    branch: [main]
+>>>>>>> c2276b8 (Work on actions)
     tags:
       - "v*.*.*"
 
