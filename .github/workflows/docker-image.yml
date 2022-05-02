@@ -17,6 +17,8 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
+      - name: Install libraries
+        run: apt-get install ld-linux-armhf
       - name: Checkout the code
         uses: actions/checkout@v1
       - name: Set up Docker Buildx
