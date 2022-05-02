@@ -209,7 +209,7 @@ export const getUserModel = (): Model<User, any, any, any> => {
 export const getAccountModel = (): Model<Account, any, any, any> => {
   if (accountModel) return accountModel;
   const db = dbConnect();
-  accountModel = db.model("Acount", accountSchema);
+  accountModel = db.model("Account", accountSchema);
   return accountModel;
 };
 export const getSessionModel = (): Model<Session, any, any, any> => {
