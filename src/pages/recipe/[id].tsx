@@ -3,14 +3,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { FlexboxGrid, Panel, Rate, Stack } from "rsuite";
 import { selectRecipes } from "../../features/user/recipeSlice";
-import { Recipe } from "../../lib/models";
-import Image from "next/image";
+import { Recipe as RecipeType } from "../../lib/models";
 
 const Recipe = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  let recipes: Recipe[] = useSelector(selectRecipes);
+  let recipes: RecipeType[] = useSelector(selectRecipes);
 
   let recipe = recipes.find((value) => value._id.toString() == id.toString());
 
