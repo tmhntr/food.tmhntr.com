@@ -10,11 +10,7 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-<<<<<<< HEAD
 RUN yarn add @swc/cli @swc/core --dev
-=======
-RUN yarn install -D @swc/cli @swc/core
->>>>>>> 4a0c706 (Add swc install to dockerfile)
 
 RUN yarn build
 
