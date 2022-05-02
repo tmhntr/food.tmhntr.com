@@ -10,8 +10,8 @@ export default function dbConnect() {
   if (conn) {
     return conn;
   }
-
-  log.debug("Connecting to db: ", MONGODB_URI);
+  log.warn("log level is", log.getLevel());
+  log.warn("Connecting to db: ", MONGODB_URI);
   conn = createConnection(MONGODB_URI);
   log.debug("Connected successfully");
   return conn;

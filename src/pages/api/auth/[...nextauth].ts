@@ -10,6 +10,7 @@ import Auth0Provider from "next-auth/providers/auth0";
 import { MongooseAdapter } from "../../../lib/mongoose-adapter";
 
 import AppleProvider from "next-auth/providers/apple";
+import log from "../../../lib/logger";
 // import EmailProvider from "next-auth/providers/email";
 
 let providers: Provider[] = [];
@@ -99,5 +100,17 @@ export default NextAuth({
       session.userId = user.id;
       return Promise.resolve(session);
     },
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
+  },
+  logger: {
+    error: (code, metadata) => log.error(code, metadata),
+    warn: (code) => log.error(code),
+    debug: (code, metadata) => log.error(code, metadata),
   },
 });
