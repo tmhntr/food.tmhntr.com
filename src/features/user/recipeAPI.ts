@@ -10,7 +10,7 @@ export const getPublicRecipes = async (): Promise<{ data: Recipe[] }> => {
   return result;
 };
 
-export const postRecipe = async (recipe): Promise<{ data: Recipe }> => {
+export const postRecipe = async (recipe: Recipe): Promise<{ data: Recipe }> => {
   const response = await fetch(`/api/recipes/`, {
     method: "POST",
     headers: {
