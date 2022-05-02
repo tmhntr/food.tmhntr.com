@@ -4,11 +4,14 @@ on:
   push:
     tags:
       - "v*.*.*"
-    branch: [feature-ci]
+    paths:
+      - .github/workflows/docker-image.yml
 
   pull_request:
     tags:
       - "v*.*.*"
+    paths:
+      - .github/workflows/docker-image.yml
 
 jobs:
   build:
