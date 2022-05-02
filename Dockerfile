@@ -24,10 +24,12 @@ ENV NODE_ENV production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+RUN mkdir public
+RUN mkdir public/uploads
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
+# COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/next ./node_modules/next
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/mini-css-extract-plugin ./node_modules/mini-css-extract-plugin
