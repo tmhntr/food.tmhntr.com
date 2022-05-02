@@ -1,9 +1,8 @@
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../app/store";
 import { SessionProvider } from "next-auth/react";
-import Auth from "../components/Auth";
 import Layout from "../components/Layout";
-import "rsuite/styles/index.less";
+import "rsuite/dist/rsuite.min.css";
 
 export default function App({ Component, pageProps }) {
   // const { auth } = Component;
