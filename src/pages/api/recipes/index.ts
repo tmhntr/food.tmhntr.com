@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
 import multer from "multer";
 import { getRecipeModel } from "../../../lib/models";
+import getUser from "../../../lib/getUser";
 
 const Recipe = getRecipeModel();
 
@@ -39,8 +40,8 @@ apiRoute.get(async (req: NextApiRequest, res: NextApiResponse) => {
 // Process a POST request
 apiRoute.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // const { _id } = await getUser(req);
-    const _id = "624fb17449de36b8ce2c6bf4";
+    const { _id } = await getUser(req);
+    // const _id = "624fb17449de36b8ce2c6bf4";
     if (_id) {
       const recipe = await Recipe.create({
         ...req.body,
