@@ -10,7 +10,11 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+<<<<<<< HEAD
 RUN yarn add @swc/cli @swc/core --dev
+=======
+RUN yarn install -D @swc/cli @swc/core
+>>>>>>> 4a0c7063b83aec398fc7a390877fff8fa7a27a7f
 
 RUN yarn build
 
