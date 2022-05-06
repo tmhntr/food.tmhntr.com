@@ -4,10 +4,8 @@ on:
   pull_request:
     tags:
       - "v*.*.*"
-    branches: [main]
-  push:
-    branches: [main]
-    tags:
+ push:
+   tags:
       - "v*.*.*"
 
 jobs:
